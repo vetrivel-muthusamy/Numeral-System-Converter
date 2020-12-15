@@ -1,17 +1,47 @@
 package converter;
 
 import java.util.Scanner;
+import static java.lang.System.*;
 
 public class Main {
     public static void main(String[] args) {
+        String sourceBaseString = "";
+        String numberString = "";
+        String targetBaseString = "";
+
         Scanner scanner = new Scanner(System.in);
-        int sourceBase = Integer.parseInt(scanner.nextLine());
-        String number   = scanner.nextLine();
-        int targetBase = Integer.parseInt(scanner.nextLine());
+        if(scanner.hasNextLine()) {
+            sourceBaseString = scanner.nextLine();
+            if (testBase(sourceBaseString)) {
+                errorExit();
+            }
+        } else {
+            errorExit();
+        }
 
-        String[] numberSplit = number.split("\\.");
+        if(scanner.hasNextLine()) {
+            numberString = scanner.nextLine();
+            if (testExists(numberString)) {
+                errorExit();
+            }
+        } else {
+            errorExit();
+        }
 
-        if (numberSplit.length == 1 || sourceBase == 1){
+        if(scanner.hasNextLine()) {
+            targetBaseString = scanner.nextLine();
+            if (testBase(targetBaseString)) {
+                errorExit();
+            }
+        } else {
+            errorExit();
+        }
+
+        String[] numberSplit = numberString.split("\\.");
+        int sourceBase = Integer.parseInt(sourceBaseString);
+        int targetBase = Integer.parseInt(targetBaseString);
+
+        if (numberSplit.length == 1 || sourceBase == 1) {
             System.out.println(convertIntegerPart(numberSplit[0], sourceBase, targetBase));
         } else {
             String integerPart = convertIntegerPart(numberSplit[0], sourceBase, targetBase);
@@ -59,5 +89,22 @@ public class Main {
             decimalValue = aux - decimal;
         }
         return result.toString();
+    }
+
+    private static boolean testBase(String base){
+        if(base.matches("[0-9]+")){
+            int n = Integer.parseInt(base);
+            return n <= 0 || n > Character.MAX_RADIX;
+        }
+        return true;
+    }
+
+    private static boolean testExists(String str){
+        return str == null || str.length() == 0;
+    }
+
+    private static void errorExit() {
+        System.out.println("error");
+        exit(0);
     }
 }
