@@ -4,24 +4,21 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //System.out.println("Hello, world!");
-        //System.out.println("42 = 0b101010");
         Scanner scanner = new Scanner(System.in);
-        int input = Integer.parseInt(scanner.nextLine());
-        int radix = Integer.parseInt(scanner.nextLine());
-        String prefix = "";
+        int sourceBase = Integer.parseInt(scanner.nextLine());
+        String number   = scanner.nextLine();
+        int targetBase = Integer.parseInt(scanner.nextLine());
 
-        switch (radix) {
-            case 2:
-                prefix = "0b";
-                break;
-            case 8:
-                prefix = "0";
-                break;
-            case 16:
-                prefix = "0x";
-                break;
+        if (sourceBase == 1) {
+            number = String.valueOf(number.length());
+        } else {
+            number = String.valueOf(Integer.parseInt(number, sourceBase));
         }
-        System.out.printf("%s%s", prefix, Long.toString(input, radix));
+
+        if (targetBase == 1) {
+            System.out.println("1".repeat(Integer.parseInt(number)));
+        } else {
+            System.out.println(Integer.toString(Integer.parseInt(number), targetBase));
+        }
     }
 }
